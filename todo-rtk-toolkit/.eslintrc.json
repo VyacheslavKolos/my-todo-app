@@ -1,0 +1,60 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier",
+        "airbnb",
+        "airbnb-typescript"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.json",
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
+    "rules": {
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-props-no-spreading": "off",
+        "react/button-has-type": "off",
+        "react/no-unstable-nested-components": "off",
+        "operator-linebreak": "off",
+        "consistent-return": "off",
+        "@typescript-eslint/no-shadow": "off",
+        "import/no-cycle": "off",
+        "object-curly-newline": "off",
+        "no-prototype-builtins": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "no-confusing-arrow": "off",
+        "function-paren-newline": "off",
+        "implicit-arrow-linebreak": "off",
+        "react/jsx-curly-newline": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "import/extensions": "off",
+        "jsx-a11y/no-static-element-interactions": "off",
+        "jsx-a11y/click-events-have-key-events": "off",
+        "@typescript-eslint/no-use-before-define": "off",
+        "camelcase": "error",
+        "spaced-comment": "error",
+        "quotes": ["error", "single"],
+        "no-duplicate-imports": "error",
+        "react/function-component-definition": "off",
+        "react/require-default-props": "off",
+        "import/no-extraneous-dependencies": "off",
+        "react/jsx-wrap-multilines": ["error", {"declaration": false, "assignment": false}],
+        "@typescript-eslint/indent": "off"
+    },
+    "settings": {
+        "import/resolver": {
+            "typescript": {}
+        }
+    }
+}
