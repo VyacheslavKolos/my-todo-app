@@ -1,21 +1,31 @@
 import { useDispatch } from 'react-redux';
-import { todosApi, useEditTodoMutation } from '../../../../redux/api/todosApi.ts';
+import {
+  todosApi,
+  useDeleteTodoMutation,
+  useEditTodoMutation,
+} from '../../../../redux/api/todosApi.ts';
 import { TodoType } from '../../../../constants/types.ts';
 import { AppDispatch } from '../../../../redux/store.ts';
 import { urlInRtkPath } from '../../../../constants/constants.ts';
-import { editTodo } from '../../../../redux/slices/TodoSlice.ts';
+import { deleteTodo, editTodo } from '../../../../redux/slices/TodoSlice.ts';
 
-type ReturnType = [(updatedTodo: TodoType) => Promise<void> | any, () => void];
+type ReturnType = [(updatedTodo: TodoType) => Promise<void> | any, (idToDelete: number) => void];
 
 const UseTodoActionsFunctions = (urlParam: string): ReturnType => {
   const dispatch: AppDispatch = useDispatch();
   const [handleEditRequest] = useEditTodoMutation();
-  const handleDeleteInRTK = () => {
-    console.log('delete in RTK');
+  const [handleDeleteRequest] = useDeleteTodoMutation();
+  const handleDeleteInRTK = async (idToDelete: number) => {
+    await handleDeleteRequest(idToDelete);
+    dispatch(
+      todosApi.util?.updateQueryData('getTodos', undefined, (todos: TodoType[]) =>
+        todos.filter((todo) => todo.id !== idToDelete),
+      ),
+    );
   };
 
-  const handleDeleteInSlice = () => {
-    console.log('deleete in Slice');
+  const handleDeleteInSlice = (idToDelete: number) => {
+    dispatch(deleteTodo(idToDelete));
   };
 
   const handleEditRTK = async (updatedTodo: TodoType) => {

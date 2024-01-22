@@ -29,7 +29,15 @@ export const todosApi = baseApi.injectEndpoints({
         body,
       }),
     }),
+
+    deleteTodo: builder.mutation<Record<string, never>, number>({
+      query: (id) => ({
+        url: `/todos/${id}`,
+        method: 'DELETE',
+      }),
+    }),
   }),
 });
 
-export const { useGetTodosQuery, useAddTodoMutation, useEditTodoMutation } = todosApi;
+export const { useGetTodosQuery, useAddTodoMutation, useEditTodoMutation, useDeleteTodoMutation } =
+  todosApi;

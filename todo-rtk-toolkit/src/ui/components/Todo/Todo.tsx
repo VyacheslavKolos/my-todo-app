@@ -27,7 +27,7 @@ const Todo: FC<Props> = ({ todo }) => {
   };
 
   const handleDelete = () => {
-    handleDeleteAction();
+    handleDeleteAction(todo.id);
     setIsDeleteModalOpen(false);
   };
 
