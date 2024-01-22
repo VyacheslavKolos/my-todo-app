@@ -16,3 +16,5 @@ export type CustomModalProps = Children & {
   title?: string;
   modalStyles?: { [key: string]: string | number };
 };
+
+export type SnackbarTypes = 'default' | 'error' | 'success' | 'warning' | 'info' | undefined;

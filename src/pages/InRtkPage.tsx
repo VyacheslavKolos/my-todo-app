@@ -3,9 +3,11 @@ import Layout from '../ui/components/Layout';
 import { todosApi, useAddTodoMutation, useGetTodosQuery } from '../redux/api/todosApi.ts';
 import { AppDispatch } from '../redux/store.ts';
 import { TodoType } from '../constants/types.ts';
+import UseCustomSnackbar from '../hooks/useCustomSnackbar.ts';
 
 const InRtkPage = () => {
   const dispatch: AppDispatch = useDispatch();
+  const { callSnackbar } = UseCustomSnackbar();
   const {
     data: todos = [],
     isFetching,
@@ -28,6 +30,7 @@ const InRtkPage = () => {
         todos.push(createdTodo);
       }),
     );
+    callSnackbar('Your todo was successfully created', 'success');
   };
 
   return (

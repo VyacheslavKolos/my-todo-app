@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { FC } from 'react';
 import { TodoType } from '../../../constants/types.ts';
 import Todo from '../Todo/Todo.tsx';
@@ -6,6 +6,7 @@ import Todo from '../Todo/Todo.tsx';
 export type TodoListProps = {
   todos: TodoType[];
 };
+
 const TodoList: FC<TodoListProps> = ({ todos }) => (
   <Box
     sx={{
@@ -20,7 +21,13 @@ const TodoList: FC<TodoListProps> = ({ todos }) => (
       padding: 2,
     }}
   >
-    {todos?.map((todo) => <Todo key={todo.id} todo={todo} />)}
+    {todos.length ? (
+      todos.map((todo) => <Todo key={todo.id} todo={todo} />)
+    ) : (
+      <Typography variant="h3" sx={{ color: '#57F287' }}>
+        Add your first task
+      </Typography>
+    )}
   </Box>
 );
 
