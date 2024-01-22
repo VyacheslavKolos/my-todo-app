@@ -1,18 +1,19 @@
 import { Box, IconButton, Typography } from '@mui/material';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { TodoType } from '../../../constants/types.ts';
 import ConfirmModal from '../Modals/ConfirmModal/ConfirmModal.tsx';
 import EditModal from '../Modals/EditModal/EditModal.tsx';
 import UseTodoActionsFunctions from './hooks/UseTodoActionsFunctions.ts';
+import useToggle from '../../../hooks/useToggle.ts';
 
 type Props = {
   todo: TodoType;
 };
 const Todo: FC<Props> = ({ todo }) => {
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+  const [isDeleteModalOpen, toggleDeleteModal] = useToggle();
+  const [isEditModalOpen, toggleEditModal] = useToggle();
 
   const [handleEditAction, handleDeleteAction] = UseTodoActionsFunctions(window.location.pathname);
   const handleEdit = (title: string) => {
@@ -23,12 +24,12 @@ const Todo: FC<Props> = ({ todo }) => {
 
     handleEditAction(updatedTodo);
 
-    setIsEditModalOpen(false);
+    toggleEditModal();
   };
 
   const handleDelete = () => {
     handleDeleteAction(todo.id);
-    setIsDeleteModalOpen(false);
+    toggleDeleteModal();
   };
 
   return (
@@ -46,10 +47,10 @@ const Todo: FC<Props> = ({ todo }) => {
       >
         <Typography variant="body1">{todo.title}</Typography>
         <Box>
-          <IconButton onClick={() => setIsEditModalOpen(true)}>
+          <IconButton onClick={toggleEditModal}>
             <ModeEditOutlineOutlinedIcon sx={{ color: '#EB459E' }} />
           </IconButton>
-          <IconButton onClick={() => setIsDeleteModalOpen(true)}>
+          <IconButton onClick={toggleDeleteModal}>
             <DeleteOutlineOutlinedIcon sx={{ color: '#EB459E' }} />
           </IconButton>
         </Box>
@@ -57,7 +58,7 @@ const Todo: FC<Props> = ({ todo }) => {
       {isDeleteModalOpen && (
         <ConfirmModal
           open={isDeleteModalOpen}
-          handleClose={() => setIsDeleteModalOpen(false)}
+          handleClose={() => toggleDeleteModal}
           title="Do you really want to delete this Todo?"
           onConfirm={handleDelete}
         />
@@ -66,7 +67,7 @@ const Todo: FC<Props> = ({ todo }) => {
       {isEditModalOpen && (
         <EditModal
           open={isEditModalOpen}
-          handleClose={() => setIsEditModalOpen(false)}
+          handleClose={toggleEditModal}
           onEdit={handleEdit}
           todo={todo}
         />
